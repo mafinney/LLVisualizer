@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Visualizer {
     public static void main(String[] args) {
@@ -12,10 +13,22 @@ public class Visualizer {
         JButton addNode = new JButton("Add node");
         addNode.setBounds(0, 0, 150, 20);
         window.add(addNode);
-        JButton removeNode = new JButton("Remove node");
-        removeNode.setBounds(150, 0, 150, 20);
-        window.add(removeNode);
+        JButton clearScreen = new JButton("Clear screen");
+        clearScreen.setBounds(150, 0, 150, 20);
+        window.add(clearScreen);
 
-        
+        addNode.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // add node action
+                System.out.println("add");
+            }
+        });
+
+        clearScreen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // clear screen action
+                System.out.println("clear");
+            }
+        });
     }
 }
