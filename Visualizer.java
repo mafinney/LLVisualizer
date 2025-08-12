@@ -6,13 +6,16 @@ public class Visualizer {
         JFrame window = new JFrame("Visualizer");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(null);
-
-        DraggableLabel label = new DraggableLabel("Label");
-        label.setBounds(50, 50, 100, 30);
-        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        window.add(label);
-        window.setSize(400, 300);
+        window.setSize(600, 400);
         window.setVisible(true);
+
+        JButton addNode = new JButton("Add node");
+        addNode.setBounds(0, 0, 150, 20);
+        window.add(addNode);
+        JButton removeNode = new JButton("Remove node");
+        removeNode.setBounds(150, 0, 150, 20);
+        window.add(removeNode);
+
+        
     }
 }
