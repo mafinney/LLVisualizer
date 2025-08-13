@@ -1,6 +1,6 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class Visualizer {
     public static void main(String[] args) {
@@ -21,16 +21,18 @@ public class Visualizer {
 
         // Button ActionListeners
         addNode.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                DraggableLabel newNode = new DraggableLabel("");
-                newNode.setBounds(50, 50, 100, 30);
-                newNode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                newNode.add(new JTextField("Value..."));
+                // add node action
+                String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: ");
+                DraggableLabel newNode = new DraggableLabel(userInput, Color.BLACK);
                 window.add(newNode);
+                window.repaint();
             }
         });
 
         clearScreen.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 // clear screen action
                 System.out.println("clear");
