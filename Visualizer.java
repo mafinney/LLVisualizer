@@ -3,7 +3,16 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Visualizer {
+    static Node head;
+    static Node curr;
+    static Node next;
+
     public static void main(String[] args) {
+        // Linkedlist setup
+        next = new Node(null, null);
+        curr = new Node(null, next);
+        head = new Node("Head", curr);
+
         // Window setup
         JFrame window = new JFrame("Visualizer");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,11 +32,18 @@ public class Visualizer {
         addNode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // add node action
-                String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: ");
-                DraggableLabel newNode = new DraggableLabel(userInput, Color.BLACK);
+                String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: "); // get node value
+                DraggableLabel newNode = new DraggableLabel(userInput, Color.BLACK); // create node visual
+
+                curr.setValue(userInput);
+                curr = next;
+                next = new Node(null, null);
+                curr.setNext(next);
+
                 window.add(newNode);
                 window.repaint();
+
+                System.out.println(head);
             }
         });
 
