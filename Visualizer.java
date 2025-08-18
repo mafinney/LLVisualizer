@@ -1,4 +1,4 @@
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -20,9 +20,6 @@ public class Visualizer {
         window.setSize(600, 400);
         window.setVisible(true);
 
-        JLabel label = new JLabel("Label");
-        window.add(label);
-
         // Button setup
         JButton addNode = new JButton("Add node");
         addNode.setBounds(0, 0, 150, 20);
@@ -35,7 +32,7 @@ public class Visualizer {
         addNode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userInput = (String) JOptionPane.showInputDialog(label, "Value of node: "); // get node value
+                String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: "); // get node value
                 DraggableLabel newNode = new DraggableLabel(userInput, Color.BLACK); // create node visual
 
                 curr.setValue(userInput);
@@ -43,8 +40,8 @@ public class Visualizer {
                 next = new Node(null, null);
                 curr.setNext(next);
 
-                label.add(newNode);
-                label.repaint();
+                window.add(newNode);
+                window.repaint();
 
                 System.out.println(head);
             }
