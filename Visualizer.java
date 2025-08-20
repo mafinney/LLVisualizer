@@ -33,7 +33,9 @@ public class Visualizer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: "); // get node value
-                DraggableLabel newNode = new DraggableLabel(userInput, Color.BLACK); // create node visual
+                DraggableLabel newNode = new DraggableLabel(userInput); // create node visual
+                newNode.setBounds(50, 50, 100, 30);
+                newNode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
                 curr.setValue(userInput);
                 curr = next;

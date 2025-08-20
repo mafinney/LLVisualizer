@@ -8,26 +8,27 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class DraggableLabel extends JLabel {
-    private Point mouseActionLocation;
+    private Point mouseClickLocation;
 
-    public DraggableLabel(String text, Color color) {
+    public DraggableLabel(String text) {
         super(text);
-        this.setBounds(50, 50, 100, 30);
-        this.setBorder(BorderFactory.createLineBorder(color));
+
+        // Listens for mouse clicks over the label and stores the location
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                mouseActionLocation = e.getPoint();
+                mouseClickLocation = e.getPoint();
             }
         });
 
+        // Listens for mouse drags and updates the labels location as a drag occurs
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (mouseActionLocation != null) {
+                if (mouseClickLocation != null) {
                     Point currLocation = getLocation();
-                    setLocation(currLocation.x + e.getX() - mouseActionLocation.x,
-                                currLocation.y + e.getY() - mouseActionLocation.y);
+                    setLocation(currLocation.x + e.getX() - mouseClickLocation.x,
+                                currLocation.y + e.getY() - mouseClickLocation.y);
                 }
             }
         });
