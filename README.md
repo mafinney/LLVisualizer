@@ -3,4 +3,5 @@ An interactive LinkedList visualizer.
 
 ## Display layering:
 - JFrame
-- DraggableLabel
+-- DraggableLabel
+-- DynamicLine
