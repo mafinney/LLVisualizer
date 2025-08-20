@@ -1,13 +1,11 @@
+/**
+ * DraggableLabel is a custom JLabel that handles displaying the nodes
+ * and making them draggable
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
-/**
- * TODO:
- * Redo DraggableLabel as a "dual class" including the JLabel attributes and
- * a Node object built in. Include a method to draw a line from the object to 
- * the object it points to as next
- */
 
 class DraggableLabel extends JLabel {
     private Point mouseActionLocation;
