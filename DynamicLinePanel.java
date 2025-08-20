@@ -3,6 +3,11 @@
  * the proper node objects dynamically as the nodes are dragged
  */
 
-class DynamicLine extends JPanel {
-    
+import javax.swing.*;
+
+class DynamicLinePanel extends JPanel {
+    public DynamicLinePanel() {
+        super();
+        
+    }
 }
