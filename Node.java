@@ -25,11 +25,11 @@ public class Node {
 
     @Override
     public String toString() {
-        String temp = "";
-        Node curr = this;
+        String temp = getValue();
+        Node curr = getNext();
         while (curr != null) {
-            temp = temp + curr.value + " -> ";
-            curr = curr.next;
+            temp += " -> " + curr.getValue();
+            curr = curr.getNext();
         }
         return temp;
     }

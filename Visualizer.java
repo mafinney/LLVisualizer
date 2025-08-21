@@ -1,60 +1,53 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class Visualizer {
-    static Node head;
-    static Node curr;
-    static Node next;
-
+    static DraggableNode head;
+    static DraggableNode curr;
     public static void main(String[] args) {
-        // Linkedlist setup
-        next = new Node(null, null);
-        curr = new Node(null, next);
-        head = new Node("Head", curr);
+        // Node setup
+        head = new DraggableNode("head", null);
+        curr = head;
 
-        // Window setup
-        JFrame window = new JFrame("Visualizer");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setLayout(null);
-        window.setSize(600, 400);
-        window.setVisible(true);
+        // Frame setup
+        JFrame frame = new JFrame("Visualizer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 400);
 
         // Button setup
         JButton addNode = new JButton("Add node");
-        addNode.setBounds(0, 0, 150, 20);
-        window.add(addNode);
-        JButton clearScreen = new JButton("Clear screen");
-        clearScreen.setBounds(150, 0, 150, 20);
-        window.add(clearScreen);
+        addNode.setBounds(0, 0, 150, 30);
 
-        // Button ActionListeners
+        // Line layer setup
+        DynamicLinePanel lineLayer = new DynamicLinePanel(head);
+        lineLayer.setOpaque(false);
+        lineLayer.setBounds(0, 0, 600, 400);
+
+        // Pane setup
+        JLayeredPane pane = new JLayeredPane();
+        pane.add(lineLayer, JLayeredPane.DEFAULT_LAYER);
+        pane.add(addNode, JLayeredPane.MODAL_LAYER);
+        frame.setContentPane(pane);
+
         addNode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userInput = (String) JOptionPane.showInputDialog(window, "Value of node: "); // get node value
-                DraggableLabel newNode = new DraggableLabel(userInput); // create node visual
+                String nodeValue = JOptionPane.showInputDialog(frame, "Value of node: ");
+                DraggableNode newNode = new DraggableNode(nodeValue, null);
                 newNode.setBounds(50, 50, 100, 30);
                 newNode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                pane.add(newNode, JLayeredPane.PALETTE_LAYER);
 
-                curr.setValue(userInput);
-                curr = next;
-                next = new Node(null, null);
-                curr.setNext(next);
+                curr.setNext(newNode);
+                curr = newNode;
 
-                window.add(newNode);
-                window.repaint();
-
+                frame.repaint();
                 System.out.println(head);
             }
         });
 
-        clearScreen.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // clear screen action
-                System.out.println("clear");
-            }
-        });
+        frame.setVisible(true);
     }
 }

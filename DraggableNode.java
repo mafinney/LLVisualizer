@@ -6,12 +6,22 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
-class DraggableLabel extends JLabel {
+class DraggableNode extends JLabel {
+    // Node
+    private String value;
+    private DraggableNode next;
+    
+    // Drag
     private Point mouseClickLocation;
 
-    public DraggableLabel(String text) {
+    public DraggableNode(String text, DraggableNode next) {
         super(text);
+
+        // Node
+        value = text;
+        this.next = next;
 
         // Listens for mouse clicks over the label and stores the location
         addMouseListener(new MouseAdapter() {
@@ -32,5 +42,32 @@ class DraggableLabel extends JLabel {
                 }
             }
         });
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public DraggableNode getNext() {
+        return next;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setNext(DraggableNode next) {
+        this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        String str = this.getValue();
+        DraggableNode temp = this.getNext();
+        while (temp != null) {
+            str += " -> " + temp.getValue();
+            temp = temp.getNext();
+        }
+        return str;
     }
 }
