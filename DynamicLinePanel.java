@@ -23,10 +23,10 @@ class DynamicLinePanel extends JPanel {
 
         updateNodeList();
 
-        DraggableNode curr = nodes.get(0);
-        DraggableNode next = nodes.get(1);
+        DraggableNode curr = nodes.get(1);
+        DraggableNode next = curr.getNext();
 
-        for (int i = 2; next != null; i++) {
+        for (int i = 3; next != null; i++) {
             g.drawLine(curr.getLocation().x, curr.getLocation().y, next.getLocation().x, next.getLocation().y);
             curr = next;
             next = nodes.get(i);
