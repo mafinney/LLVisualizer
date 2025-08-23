@@ -1,5 +1,5 @@
 /**
- * DraggableLabel is a custom JLabel that handles displaying the nodes
+ * DraggableLabel is a custom JLabel class that handles displaying the nodes
  * and making them draggable
  */
 
@@ -9,17 +9,14 @@ import javax.swing.*;
 import java.util.*;
 
 class DraggableNode extends JLabel {
-    // Node
     private String value;
     private DraggableNode next;
-    
-    // Drag
+
     private Point mouseClickLocation;
 
     public DraggableNode(String text, DraggableNode next) {
         super(text);
 
-        // Node
         value = text;
         this.next = next;
 
