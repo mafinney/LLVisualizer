@@ -6,7 +6,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
 
 class DraggableNode extends JLabel {
     private String value;
@@ -34,8 +33,7 @@ class DraggableNode extends JLabel {
             public void mouseDragged(MouseEvent e) {
                 if (mouseClickLocation != null) {
                     Point currLocation = getLocation();
-                    setLocation(currLocation.x + e.getX() - mouseClickLocation.x,
-                                currLocation.y + e.getY() - mouseClickLocation.y);
+                    setLocation(currLocation.x + e.getX(), currLocation.y + e.getY());
                 }
             }
         });
