@@ -13,6 +13,7 @@ class DynamicLinePanel extends JPanel {
     public DynamicLinePanel(DraggableNode head) {
         super();
         this.head = head;
+        setOpaque(false);
     }
 
     protected void paintComponent(Graphics g) {

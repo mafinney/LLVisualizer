@@ -22,7 +22,6 @@ public class Visualizer {
 
         // Line layer setup
         DynamicLinePanel lineLayer = new DynamicLinePanel(head);
-        lineLayer.setOpaque(false);
         lineLayer.setBounds(0, 0, 600, 400);
 
         // Pane setup

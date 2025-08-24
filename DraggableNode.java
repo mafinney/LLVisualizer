@@ -6,6 +6,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 class DraggableNode extends JLabel {
     private String value;
@@ -13,10 +14,10 @@ class DraggableNode extends JLabel {
 
     private Point mouseClickLocation;
 
-    public DraggableNode(String text, DraggableNode next) {
-        super(text);
+    public DraggableNode(String value, DraggableNode next) {
+        super(value);
 
-        value = text;
+        this.value = value;
         this.next = next;
 
         // Listens for mouse clicks over the label and stores the location
@@ -33,7 +34,8 @@ class DraggableNode extends JLabel {
             public void mouseDragged(MouseEvent e) {
                 if (mouseClickLocation != null) {
                     Point currLocation = getLocation();
-                    setLocation(currLocation.x + e.getX(), currLocation.y + e.getY());
+                    // New location is the current location + mouse location - original mouse click location
+                    setLocation(currLocation.x + e.getX() - mouseClickLocation.x, currLocation.y + e.getY() - mouseClickLocation.y);
                 }
             }
         });
@@ -57,8 +59,8 @@ class DraggableNode extends JLabel {
 
     @Override
     public String toString() {
-        String str = this.getValue();
-        DraggableNode temp = this.getNext();
+        String str = getValue();
+        DraggableNode temp = getNext();
         while (temp != null) {
             str += " -> " + temp.getValue();
             temp = temp.getNext();
