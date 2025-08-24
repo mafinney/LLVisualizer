@@ -26,6 +26,7 @@ public class Visualizer {
 
         // Line layer setup
         DynamicLinePanel lineLayer = new DynamicLinePanel(head);
+        lineLayer.setLayout(null);
         frame.add(lineLayer, BorderLayout.CENTER);
 
         addNode.addActionListener(new ActionListener() {
