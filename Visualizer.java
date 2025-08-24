@@ -14,21 +14,19 @@ public class Visualizer {
         // Frame setup
         JFrame frame = new JFrame("Visualizer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setLayout(new BorderLayout());
+        frame.setMinimumSize(new Dimension(600, 400));
 
         // Button setup
         JButton addNode = new JButton("Add node");
         addNode.setBounds(0, 0, 150, 30);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(addNode);
+        frame.add(buttonPanel, BorderLayout.NORTH);
 
         // Line layer setup
         DynamicLinePanel lineLayer = new DynamicLinePanel(head);
-        lineLayer.setBounds(0, 0, 600, 400);
-
-        // Pane setup
-        JLayeredPane pane = new JLayeredPane();
-        pane.add(lineLayer, JLayeredPane.DEFAULT_LAYER);
-        pane.add(addNode, JLayeredPane.MODAL_LAYER);
-        frame.setContentPane(pane);
+        frame.add(lineLayer, BorderLayout.CENTER);
 
         addNode.addActionListener(new ActionListener() {
             @Override
@@ -37,7 +35,7 @@ public class Visualizer {
                 DraggableNode newNode = new DraggableNode(nodeValue, null);
                 newNode.setBounds(50, 50, 100, 30);
                 newNode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                pane.add(newNode, JLayeredPane.PALETTE_LAYER);
+                lineLayer.add(newNode);
 
                 curr.setNext(newNode);
                 curr = newNode;
