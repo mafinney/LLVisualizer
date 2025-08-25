@@ -26,7 +26,6 @@ public class Visualizer {
 
         // Line layer setup
         DynamicLinePanel lineLayer = new DynamicLinePanel(head);
-        lineLayer.setLayout(null);
         frame.add(lineLayer, BorderLayout.CENTER);
 
         addNode.addActionListener(new ActionListener() {
@@ -34,13 +33,13 @@ public class Visualizer {
             public void actionPerformed(ActionEvent e) {
                 String nodeValue = JOptionPane.showInputDialog(frame, "Value of node: ");
                 DraggableNode newNode = new DraggableNode(nodeValue, null);
-                newNode.setBounds(50, 50, 100, 30);
                 newNode.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 lineLayer.add(newNode);
 
                 curr.setNext(newNode);
                 curr = newNode;
 
+                frame.revalidate();
                 frame.repaint();
                 System.out.println(head);
             }

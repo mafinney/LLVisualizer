@@ -14,6 +14,7 @@ class DynamicLinePanel extends JPanel {
         super();
         this.head = head;
         setOpaque(false);
+        setLayout(null);
     }
 
     protected void paintComponent(Graphics g) {
@@ -24,7 +25,7 @@ class DynamicLinePanel extends JPanel {
             DraggableNode next = curr.getNext();
 
             while (next != null) {
-                g.drawLine(curr.getLocation().x, curr.getLocation().y, next.getLocation().x, next.getLocation().y);
+                g.drawLine(curr.getNextPoint().x, curr.getNextPoint().y, next.getNextPoint().x, next.getNextPoint().y);
                 curr = next;
                 next = next.getNext();
             }
