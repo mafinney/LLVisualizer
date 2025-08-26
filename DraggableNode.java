@@ -1,48 +1,58 @@
 /**
- * DraggableLabel is a custom JLabel class that handles displaying the nodes
- * and making them draggable
+ * DraggableNode stores a value and pointers to the other DraggableNodes and handles display / drag
+ * 
  */
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
 
 class DraggableNode extends JPanel {
+    // Visual consts
     final static int ROWS = 1;
     final static int COLS = 2;
-
+    
     final static int WIDTH = 100;
     final static int HEIGHT = 30;
-    final static double LINE_OFFSET_X = ((double) WIDTH) * (3.0 / 4.0);
-    final static double LINE_OFFSET_Y = ((double) HEIGHT) / 2.0;
+    final static int LINE_OFFSET_X = (int) ((double) WIDTH * (3.0 / 4.0));
+    final static int LINE_OFFSET_Y = (int) ((double) HEIGHT / 2.0);
 
-    String value;
-    DraggableNode next;
-    JLabel valueBox;
-    JLabel nextBox;
-    Point mouseClickLocation;
+    // Node fields
+    private String value;
+    private ArrayList<DraggableNode> nextPointers;
+    
+    // Visual fields
+    private JLabel valueBox;
+    private JLabel nextBox;
+    private Point mouseClickLocation;
 
-    public DraggableNode(String value, DraggableNode next) {
+    // Handles value & list of nexts or null next
+    public DraggableNode(String valueInput, DraggableNode next) {
         super();
         setLayout(new GridLayout(ROWS, COLS));
         setBounds(0, 0, WIDTH, HEIGHT);
 
-        this.value = value;
-        this.next = next;
+        value = valueInput;
+        nextPointers = new ArrayList<>();
+        if (next != null) {
+            nextPointers.add(next);
+        }
+
         valueBox = new JLabel(value, SwingConstants.CENTER);
-        nextBox = new JLabel("•", SwingConstants.CENTER);
         valueBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        nextBox = new JLabel("•", SwingConstants.CENTER);
         nextBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(valueBox);
         add(nextBox);
 
-        revalidate();
-        repaint();
-
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                mouseClickLocation = e.getPoint();
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    mouseClickLocation = e.getPoint();
+                } else {
+                    mouseClickLocation = null;
+                }
             }
         });
 
@@ -50,11 +60,10 @@ class DraggableNode extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 if (mouseClickLocation != null) {
                     Point currLocation = getLocation();
-                    // New location is current location + mouse location - original mouse click location
                     Point newLocation = new Point(currLocation.x + e.getX() - mouseClickLocation.x,
-                                                  currLocation.y + e.getY() - mouseClickLocation.y);
+                                                    currLocation.y + e.getY() - mouseClickLocation.y);
                     Dimension parentBounds = getParent().getSize();
-                    
+
                     if (inBounds(newLocation, parentBounds)) {
                         setLocation(newLocation);
                     }
@@ -63,45 +72,33 @@ class DraggableNode extends JPanel {
         });
     }
 
-    // Check if the location given is within the bounds given (and not negative)
     private boolean inBounds(Point location, Dimension bounds) {
         if (location.x < 0 || location.y < 0) {
             return false;
-        }
-        if (location.x > (bounds.getWidth() - WIDTH) || location.y > (bounds.getHeight() - HEIGHT)) {
+        } else if (location.x > (bounds.getWidth() - WIDTH) || location.y > (bounds.getHeight() - HEIGHT)) {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
+    // Returns the point coords of the center of the next label
     public Point getNextPoint() {
-        return new Point(getLocation().x + (int) LINE_OFFSET_X, getLocation().y + (int) LINE_OFFSET_Y);
+        return new Point(getLocation().x + LINE_OFFSET_X, getLocation().y + LINE_OFFSET_Y);
     }
 
-    public String getValue() {
-        return value;
+    // Returns the list of next pointers
+    public ArrayList<DraggableNode> getNextList() {
+        return nextPointers;
     }
 
-    public DraggableNode getNext() {
-        return next;
+    // Add a list of next pointers to the list
+    public void addNextList(ArrayList<DraggableNode> nextList) {
+        nextPointers.addAll(nextList);
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public void setNext(DraggableNode next) {
-        this.next = next;
-    }
-
-    @Override
-    public String toString() {
-        String str = getValue();
-        DraggableNode temp = getNext();
-        while (temp != null) {
-            str += " -> " + temp.getValue();
-            temp = temp.getNext();
-        }
-        return str;
+    // Add a single next pointer
+    public void addNext(DraggableNode next) {
+        nextPointers.add(next);
     }
 }

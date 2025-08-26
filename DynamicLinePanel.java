@@ -1,35 +1,75 @@
 /**
- * DynamicLine is a custom JPanel class that handles drawing lines between
- * the proper node objects dynamically as the nodes are dragged
+ * DynamicLinePanel handles drawing lines between connected DraggableNodes
  */
 
 import javax.swing.*;
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 class DynamicLinePanel extends JPanel {
-    DraggableNode head;
-    public DynamicLinePanel(DraggableNode head) {
+    ArrayList<DraggableNode> nodes;
+    ArrayList<Line> lines;
+
+    public DynamicLinePanel() {
         super();
-        this.head = head;
         setOpaque(false);
         setLayout(null);
+        nodes = new ArrayList<>();
+        lines = new ArrayList<>();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        try {
-            DraggableNode curr = head.getNext();
-            DraggableNode next = curr.getNext();
-
-            while (next != null) {
-                g.drawLine(curr.getNextPoint().x, curr.getNextPoint().y, next.getNextPoint().x, next.getNextPoint().y);
-                curr = next;
-                next = next.getNext();
+        for (DraggableNode node : nodes) {
+            ArrayList<DraggableNode> nextList = node.getNextList();
+            for (DraggableNode next : nextList) {
+                g.drawLine(node.getNextPoint().x, node.getNextPoint().y, next.getNextPoint().x, next.getNextPoint().y);
+                lines.add(new Line(node.getNextPoint(), next.getNextPoint()));
             }
-            repaint();
-        } catch (NullPointerException e) {}
+        }
+
+        repaint();
+    }
+    
+    public void addNode(DraggableNode node) {
+        add(node);
+        nodes.add(node);
+
+        repaint();
+    }
+}
+
+class Line {
+    private Point src;
+    private Point dest;
+
+    public Line(Point src, Point dest) {
+        this.src = src;
+        this.dest = dest;
+    }
+
+    public boolean isComplete() {
+        if (src == null || dest == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public Point getSrc() {
+        return src;
+    }
+
+    public Point getDest() {
+        return dest;
+    }
+
+    public void setSrc(Point point) {
+        src = point;
+    }
+
+    public void setDest(Point point) {
+        dest = point;
     }
 }
