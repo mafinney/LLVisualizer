@@ -39,6 +39,16 @@ class DynamicLinePanel extends JPanel {
 
         repaint();
     }
+
+    public void clear() {
+        for (DraggableNode node : nodes) {
+            node.clearNextList();
+        }
+        nodes.clear();
+        lines.clear();
+        removeAll();
+        repaint();
+    }
 }
 
 class Line {

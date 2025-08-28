@@ -101,4 +101,9 @@ class DraggableNode extends JPanel {
     public void addNext(DraggableNode next) {
         nextPointers.add(next);
     }
+
+    // Clear the list of pointers
+    public void clearNextList() {
+        nextPointers.clear();
+    }
 }
