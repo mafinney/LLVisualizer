@@ -54,19 +54,3 @@ public class Visualizer {
         frame.setVisible(true);
     }
 }
-
-/**
- * Ayu Darkvenom
- * Calm Darkvenom
- * Gruvbox Concoctis Dark
- * Lunar
- * One Dark Pro No Italic
- * Rose Noctis
- * Slime
- * Slime Extra Dark
- * Stellar
- * Sweet Dark
- * Sweet Dark Bold
- * Tomorrow Night
- * Zenith
- */
