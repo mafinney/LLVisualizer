@@ -50,6 +50,21 @@ class DraggableNode extends JPanel {
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     mouseClickLocation = e.getPoint();
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    mouseClickLocation = null;
+                    
+                    JPopupMenu properties = new JPopupMenu();
+                    JMenuItem updateValue = new JMenuItem("Update value");
+                    properties.add(updateValue);
+                    properties.show(e.getComponent(), e.getX(), e.getY());
+                    updateValue.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            String userInput = (String) JOptionPane.showInputDialog(getParent(), "Update value: ", getValue());
+                            updateValue(userInput);
+                            valueBox.setText(userInput);
+                        }
+                    });
+
                 } else {
                     mouseClickLocation = null;
                 }
@@ -80,6 +95,17 @@ class DraggableNode extends JPanel {
         } else {
             return true;
         }
+    }
+
+    // Return the value
+    public String getValue() {
+        return value;
+    }
+
+    // Update value
+    public void updateValue(String valueInput) {
+        value = valueInput;
+        valueBox.setText(valueInput);
     }
 
     // Returns the point coords of the center of the next label
